@@ -1,0 +1,802 @@
+/* ---
+--- JORNADA RICA - por Flaviana Vaz
+--- Baseado no Resumo e ID Visual fornecido.
+--- */
+
+/* --- RAÍZES (Cores e Fontes) --- */
+:root {
+    /* Paleta Principal */
+    --color-burgundy: #550B14;     /* Borgonha Intenso */
+    --color-gold: #DA8825;       /* Dourado Quente */
+    --color-off-white: #ffffff;   /* Off White Suave */
+    --color-green: #636802;       /* Verde Terroso */
+    
+    /* Cores de UI */
+    --color-bg-light: var(--color-off-white);
+    --color-bg-dark: var(--color-burgundy);
+    --color-text-light: var(--color-off-white);
+    --color-text-dark: #3a3a3a; /* Um preto suave para leitura */
+    --color-text-dark-secondary: #5c5c5c;
+    --color-gold-glow: rgba(218, 136, 37, 0.4);
+
+    /* Fontes */
+    --font-primary: 'DM Sans', sans-serif;       /* Textos */
+    --font-secondary: 'DM Serif Display', serif; /* Títulos */
+    --font-tertiary: 'Buffalo', cursive; 
+}
+
+/* --- ESTILIZAÇÃO DO SCROLLBAR (Atualizado) --- */
+::-webkit-scrollbar {
+    width: 8px; /* MAIS FINO */
+}
+::-webkit-scrollbar-track {
+    background: #1a1a1a; /* FUNDO ESCURO */
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-gold); /* Scroll dourado */
+    border-radius: 10px;
+    border: 2px solid #1a1a1a; /* Borda escura (para combinar com o fundo) */
+}
+
+/* --- RESET BÁSICO --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--color-burgundy);
+    color: var(--color-text-dark);
+    line-height: 1.7;
+    overflow-x: hidden;
+    font-weight: 400; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-secondary);
+    font-weight: 400; 
+    line-height: 1.2;
+    letter-spacing: normal;
+}
+
+h1 { 
+    font-size: 3.2rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+} 
+h2 { 
+    font-size: 2.8rem; 
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+h3 { 
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-gold);
+}
+
+p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--color-text-dark-secondary);
+}
+p:last-child {
+    margin-bottom: 0;
+}
+
+a {
+    color: var(--color-gold);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: var(--color-burgundy);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.small-container {
+    max-width: 750px;
+    text-align: center;
+}
+
+section {
+    padding: 6rem 0;
+    overflow: hidden; 
+}
+section#sobre {
+    padding-top: 0;
+}
+
+/* --- ESTILOS DE SEÇÃO (Clara e Escura) --- */
+.section-light {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-dark);
+}
+.section-light h2 {
+    color: var(--color-burgundy);
+}
+.section-light p {
+    color: var(--color-text-dark-secondary);
+}
+
+.section-dark {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+
+}
+.section-dark h2 {
+    color: var(--color-text-light); 
+}
+.section-dark h2 .price-new,
+.section-dark h3 {
+    color: var(--color-gold); 
+}
+.section-dark p {
+    color: rgba(249, 247, 245, 0.85); 
+}
+.section-dark a {
+    color: black;
+}
+.section-dark a:hover {
+    color: var(--color-text-light);
+}
+
+/* --- LOADER --- */
+.loader-wrap{
+  position:fixed; inset:0; z-index:10000;
+  display:grid; place-items:center;
+  background:var(--color-bg-dark); 
+  opacity:1; transition:opacity .4s ease, visibility .4s ease;
+  visibility:visible;
+}
+.loader-wrap.fade-out{opacity:0; pointer-events:none; visibility:hidden}
+.loader-inner{text-align:center; width:fit-content}
+.loader-logo img{
+  width:160px; height:auto; object-fit:contain; animation:fadeIn .8s ease-out forwards;
+}
+.loader-bar{
+  position:relative; width:150px; height:4px; margin:12px auto 0;
+  border-radius:999px; background:rgba(255,255,255,.15); overflow:hidden;
+}
+.loader-fill{
+  position:absolute; inset:0; background:var(--color-gold); 
+  transform-origin:left; transform:scaleX(0); animation:fillLtoR 2.5s ease-in-out forwards;
+}
+.loader-text {
+    color: rgba(249, 247, 245, 0.7);
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    animation: fadeIn .8s ease-out forwards;
+}
+
+@keyframes fillLtoR{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:translateY(0)}}
+
+
+/* --- ANIMAÇÃO FADE-IN (Scroll) --- */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- BOTÃO CTA (CORRIGIDO) --- */
+.cta-button{
+  background-color:var(--color-gold);
+  color: var(--color-burgundy); 
+  padding: 16px 32px; 
+  border-radius: 8px; 
+  text-decoration:none;
+  font-weight:700; 
+  border:none; cursor:pointer;
+  display:inline-block; margin-top:20px; position:relative; overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease;
+  box-shadow:0 4px 15px var(--color-gold-glow);
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  text-transform: none; 
+  letter-spacing: -0.4px;
+}
+.cta-button::before{
+  content:''; position:absolute; top:0; bottom:0; left:0; width:50%;
+  background:linear-gradient(to right, transparent, rgba(255,255,255,.5), transparent);
+  transform:translateX(-75%) skewX(-20deg);
+  animation:moveLight 3s linear infinite;
+  pointer-events:none; opacity:.85;
+}
+.cta-button:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 25px var(--color-gold-glow);
+}
+
+/* --- ESTILO DA SETA PARA ROLAR --- */
+.scroll-arrow {
+    display: block;
+    width: 30px; /* Tamanho da seta */
+    height: auto;
+    opacity: 0.7;
+    
+    /* Posicionamento absoluto no Desktop */
+    position: absolute;
+    bottom: 4rem; /* Distância do fundo da seção .hero */
+    left: 50%;    /* Centraliza na TELA */
+    transform: translateX(-50%);
+    z-index: 3; /* Garante que fique acima da imagem de fundo */
+}
+/* --- [NOVO] Caixa com Borda (Seção Sobre) --- */
+.bordered-text-box {
+    border: 1px solid rgb(218, 136, 37);
+    background-color: transparent; /* Sem preenchimento */
+    padding: 2rem; /* Espaçamento interno */
+    border-radius: 8px; /* Cantos arredondados */
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+}
+@keyframes moveLight{
+  0%{transform:translateX(-75%) skewX(-20deg)}
+  100%{transform:translateX(125%) skewX(-20deg)}
+}
+
+
+/* --- 1. HERO (Layout "NO TOPO" - Corrigido) --- */
+.hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-burgundy);
+    
+    /* Padding do Desktop para alinhar à esquerda (como na referência) */
+    padding: 100px 8% 100px 16%;
+    
+    /* Imagem de fundo para DESKTOP (como na referência) */
+    background-image:  url('img/bg-desktop.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Div da imagem mobile (oculta no desktop) */
+.hero-image-mobile { 
+    display: none; 
+}
+/* Logo que sobrepõe (oculto no desktop) */
+.hero-logo-mobile {
+    display: none;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 2;
+    /* Remove o 'margin: auto' para obedecer o padding do .hero */
+    margin: 0; 
+    padding: 0; /* O container não precisa de padding aqui */
+    width: 100%;
+    max-width: 600px; /* Largura do texto como na referência */
+}
+
+.hero-text-content {
+    position: relative;
+    z-index: 2;
+    color: var(--color-text-light);
+    text-align: left; /* Alinhado à esquerda no desktop */
+}
+
+.hero-headline {
+    font-size: 3.5rem;
+}
+/* Destaque dourado para o H1 (Desktop) */
+.hero-headline .highlight {
+    color: var(--color-gold);
+}
+
+.hero-description {
+    font-size: 1rem;
+    color: rgba(185, 126, 67, 0.9);
+}
+
+
+/* --- 3. & 4. LISTAS ESTILIZADAS (Para Quem, Conquistar, Bônus) --- */
+.styled-list {
+    margin-top: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.styled-list li {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.6;
+}
+.styled-list li::before {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+    margin-top: -2px; 
+}
+/* Ícones específicos */
+.styled-list.icon-leaf li::before {
+    content: '🌱';
+    color: var(--color-green);
+}
+.styled-list.icon-heart li::before {
+    content: '💛';
+}
+.styled-list.icon-gift li::before {
+    content: '🎁';
+}
+
+/* ============================================= */
+/* ============ CÓDIGO CSS ADICIONADO ============ */
+/* ============================================= */
+/* --- [NOVO] Grid 'Para Quem' (Substitui .styled-list nessa seção) --- */
+.para-quem-grid {
+    display: grid;
+    /* Cria colunas responsivas: 
+       - Tenta encaixar o máximo de colunas de 300px.
+       - Em telas menores (abaixo de ~640px), vira 1 coluna (1fr). 
+    */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem; /* Espaçamento entre os cards */
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.para-quem-card {
+    background: rgba(255, 255, 255, 0.05); /* Mesmo fundo dos 'Pilares' */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    display: flex; /* Alinha ícone e texto */
+    align-items: flex-start; /* Alinha no topo */
+    gap: 1rem; /* Espaço entre ícone e texto */
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.para-quem-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.para-quem-card .card-icon {
+    font-size: 1.8rem;
+    line-height: 1.4; /* Alinha melhor com o texto */
+    margin-top: -3px; /* Ajuste fino vertical */
+}
+
+.para-quem-card p {
+    margin-bottom: 0; /* Remove a margem padrão do <p> */
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+/* ============================================= */
+/* ============ FIM DO CÓDIGO ADICIONADO ========= */
+/* ============================================= */
+
+
+/* Frase de apoio humanizada (usando a fonte Buffalo) */
+.support-phrase {
+    font-family: var(--font-tertiary);
+    font-size: 1.5rem;
+    color: var(--color-burgundy);
+    line-height: 1.4;
+    font-weight: normal;
+    margin-top: 2.5rem;
+}
+.section-dark .support-phrase {
+    color: var(--color-text-light);
+}
+.support-phrase.gold {
+    color: var(--color-gold);
+}
+
+
+/* --- 5. PILARES (Como Funciona) --- */
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin: 2.5rem 0;
+}
+.pillar-item {
+    background: rgba(255, 255, 255, 0.05); 
+    padding: 2.5rem 2rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+.pillar-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+}
+.pillar-item h3 {
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+}
+.section-subtext {
+    margin-top: 2.5rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* --- 6. & 8. LAYOUTS DE DUAS COLUNAS (Bônus, Sobre) --- */
+.two-column-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+.column-text h2 {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+.column-text .styled-list {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+}
+.image-placeholder {
+    width: 100%;
+    min-height: 400px;
+    border-radius: 8px;
+    background-color: #eee;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-secondary);
+    color: #aaa;
+    font-size: 1.2rem;
+    overflow: hidden; 
+}
+.section-dark .image-placeholder {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: var(--color-text-light);
+}
+
+
+/* --- 7. & 9. SEÇÕES DE CTA (Oferta, Final) --- */
+.section-cta {
+    text-align: center;
+}
+.section-cta h2 {
+    line-height: 1.3;
+}
+
+/* Estilos do Preço */
+.price-old {
+    font-size: 1.8rem;
+    font-weight: 400;
+    font-family: var(--font-primary);
+    color: rgba(249, 247, 245, 0.6);
+    text-decoration: line-through;
+    display: block;
+}
+.price-main {
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-family: var(--font-primary);
+    color: var(--color-text-light);
+    display: block;
+    margin: 0.5rem 0;
+}
+.price-new {
+    font-size: 4.5rem;
+    font-family: var(--font-secondary);
+    color: var(--color-gold);
+    display: block;
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+.section-cta p {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* --- 10. FOOTER --- */
+.footer {
+    background-color: var(--color-bg-dark);
+    text-align: center;
+    padding: 2.5rem 0;
+    border-top: 4px solid var(--color-gold);
+}
+.footer p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: rgba(249, 247, 245, 0.7);
+}
+
+
+/* ---
+---
+--- RESPONSIVO
+---
+--- */
+@media (max-width: 768px) {
+    h1, .hero-headline { font-size: 2.5rem; }
+    h2 { font-size: 2.2rem; }
+    h3 { font-size: 1.3rem; }
+
+    section {
+        padding: 4rem 0;
+    }
+
+    /* Remove o padding-top apenas da seção "sobre" no mobile */
+section#sobre {
+    padding-top: 0;
+}
+section#sobre {
+    padding-top: 0rem; /* Ajuste para o mobile */
+}
+    /* --- [INÍCIO] HERO MOBILE (Texto 400px do Topo) --- */
+    .hero{
+        min-height: 100svh; /* Ocupa 100% da altura da tela do mobile */
+        background-image:  url('img/bg-mobile.jpg'); /* Imagem com leve sombra */
+        background-size:cover; 
+        background-position:center; 
+        padding:0; 
+        display:flex; /* Usa flex para alinhar o texto */
+        flex-direction: column;
+        justify-content: flex-start; /* Alinha o conteúdo no topo */
+        position: relative;
+    }
+
+    .hero-image-mobile{
+        display:none; /* Não usamos esta div no mobile */
+    }
+
+    .hero-logo-mobile {
+        display: none; /* Logo também não é usado */
+    }
+
+    .hero-container {
+        /* [SUA REQUISIÇÃO] 400px de padding NO TOPO */
+        padding: 400px 1.5rem 4rem 1.5rem; 
+        max-width: 100%;
+        margin: 0;
+        position: relative;
+        z-index: 3;
+    }
+
+    .hero-text-content{
+        max-width:100%; 
+        padding: 0;
+        
+        /* Remove o fundo vinho e a sombra do BLOCO */
+        background-color: transparent;
+        margin-top: 0; 
+        border-radius: 0;
+        box-shadow: none;
+        
+        display:flex; 
+        flex-direction:column; 
+        align-items:center; 
+        text-align:center;
+    }
+    
+    .hero-headline { 
+        font-size: 2rem; 
+      
+    }
+    /* Destaque dourado para o H1 (Mobile) */
+    .hero-headline .highlight {
+        color: var(--color-gold);
+    }
+    
+    .hero-description {
+        font-size: 1.1rem;
+        
+    }
+
+    .cta-button {
+        width: 100%; 
+        max-width: 350px;
+    }
+    /* --- [FIM] HERO MOBILE --- */
+
+    
+    /* --- LISTAS MOBILE --- */
+    .styled-list {
+        text-align: left;
+    }
+
+    /* --- PILARES MOBILE --- */
+    .pillars-grid {
+        grid-template-columns: 1fr;
+    }
+    .pillar-item {
+        padding: 2rem 1.5rem;
+    }
+
+    /* --- LAYOUT 2 COLUNAS MOBILE --- */
+    .two-column-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .column-text h2 {
+        text-align: center;
+    }
+    .image-placeholder {
+        min-height: 300px;
+    }
+    .two-column-layout.reverse-mobile {
+        grid-auto-flow: dense;
+    }
+    .two-column-layout.reverse-mobile .column-image {
+        grid-row: 1;
+    }
+    .two-column-layout.reverse-mobile .column-text {
+        grid-row: 2;
+    }
+
+    /* --- PREÇO MOBILE --- */
+    .price-old { font-size: 1.5rem; }
+    .price-new { font-size: 3.5rem; }
+}
+/* --- ESTILO DA SETA (MOBILE) --- */
+    .scroll-arrow {
+        position: static;  /* Remove o posicionamento absoluto */
+        transform: none;   /* Remove a transformação */
+        
+        /* Define o espaçamento dentro do bloco de texto */
+        margin-top: 2.5rem; /* Espaço entre o botão e a seta */
+        
+        /* O 'align-items: center' do .hero-text-content
+         já vai centralizar a seta automaticamente no mobile.
+        */
+    }
+
+    /* ============================================= */
+/* ============ CÓDIGO CSS ADICIONADO ============ */
+/* ============================================= */
+
+/* --- Ajuste Específico Seção #conquistar (40/60) --- */
+@media (min-width: 769px) { /* Aplica apenas no desktop */
+    #conquistar .two-column-layout {
+        grid-template-columns: 40% 1fr; /* 40% imagem, resto texto */
+        gap: 4rem; /* Aumentando o espaço entre eles */
+    }
+}
+/* ============================================= */
+/* ============ CÓDIGO CSS ADICIONADO ============ */
+/* ============================================= */
+
+/* --- Estilo dos Números dos Pilares --- */
+.pillar-item h3 {
+    display: flex; /* Alinha o círculo e o texto */
+    align-items: center; 
+}
+
+.pillar-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Impede que o círculo diminua */
+    
+    width: 32px;  /* Largura do círculo */
+    height: 32px; /* Altura do círculo */
+    
+    background-color: var(--color-gold); /* Fundo "Laranja" (Dourado) */
+    color: white; /* Cor do número (Borgonha) */
+    
+    border-radius: 50%; /* Círculo perfeito */
+    font-family: var(--font-primary); /* Fonte DM Sans (dos textos) */
+    font-weight: 700; /* Negrito */
+    font-size: 1.1rem; /* Tamanho do número */
+    
+    margin-right: 0.75rem; /* Espaço entre o círculo e o texto */
+}
+
+/* ============================================= */
+/* ============ CÓDIGO CSS ADICIONADO ============ */
+/* ============================================= */
+
+/* --- 1. Novo Ícone de Check (Bônus) --- */
+/* Substitui .icon-gift */
+.styled-list.icon-check li::before {
+    content: '✔'; /* Check moderno */
+    color: var(--color-gold); /* Cor da paleta */
+    font-size: 1.3rem;
+    margin-right: 0.85rem;
+    margin-top: 0; /* Ajuste fino vertical */
+    line-height: 1.4; /* Alinha com a primeira linha do texto */
+}
+
+/* --- 2. Correção de Layout (Bônus) --- */
+/* O <li> (pai) já é 'display: flex'.
+  Este 'div' é o segundo item flex (depois do ícone ::before).
+  Usamos flex nele também para controlar o <strong> e o <span>.
+*/
+.bonus-item-content {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebrar linha no desktop se necessário */
+    align-items: baseline; /* Alinha a base do <strong> e do <span> */
+}
+
+.bonus-item-content strong {
+    /* Dá um respiro entre o título e a descrição */
+    margin-right: 0.5em; 
+}
+
+/* --- Correção Principal (Mobile) ---
+  Força o <strong> e o <span> a ficarem um sobre o outro
+  de forma organizada, corrigindo o layout da imagem 591aa2.png.
+*/
+@media (max-width: 480px) {
+    .bonus-item-content {
+        /* Transforma o flex em uma coluna */
+        flex-direction: column;
+        /* Remove o alinhamento de 'baseline' que não faz sentido em coluna */
+        align-items: flex-start;
+    }
+    
+    .bonus-item-content strong {
+        margin-right: 0; /* Remove a margem lateral */
+        margin-bottom: 2px; /* Adiciona um respiro abaixo */
+    }
+}
+
+/* ============================================= */
+/* ============ CÓDIGO CSS ADICIONADO ============ */
+/* ============================================= */
+
+/* Centraliza os cards "Para Quem" e a frase (Desktop) */
+@media (min-width: 960px) { 
+    
+    #para-quem .para-quem-grid {
+        /* Sobrescreve o 'display: grid' para desktop */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Centraliza as linhas de cards */
+    }
+
+    #para-quem .para-quem-card {
+        /* Define o tamanho dos cards que era controlado pelo 'grid'.
+          Isso simula o 'minmax(300px, 1fr)' em um layout flex
+          para um container de 1100px com 3 colunas.
+        */
+        flex-basis: 300px; /* min-width */
+        flex-grow: 1;      /* permite crescer (o 1fr) */
+        max-width: 350px;  /* Limite para forçar 3 colunas */
+    }
+
+    /* Centraliza a frase de apoio */
+    #para-quem .highlight-box {
+        text-align: center;
+    }
+}
