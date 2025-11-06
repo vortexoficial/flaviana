@@ -266,6 +266,7 @@ section#sobre {
 
 
 /* --- 1. HERO (Layout "NO TOPO" - Corrigido) --- */
+/* --- 1. HERO (Layout "NO TOPO" - Corrigido) --- */
 .hero {
     position: relative;
     width: 100%;
@@ -280,10 +281,12 @@ section#sobre {
     /* Imagem de fundo para DESKTOP (como na referência) */
     background-image:  url('img/bg-desktop.jpg');
     background-size: cover;
-    background-position: center;
+    
+    /* MUDANÇA AQUI 👇 */
+    background-position: right center; /* Antes era 'center' */
+    
     background-repeat: no-repeat;
 }
-
 /* Div da imagem mobile (oculta no desktop) */
 .hero-image-mobile { 
     display: none; 
@@ -319,7 +322,7 @@ section#sobre {
 }
 
 .hero-description {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: rgba(185, 126, 67, 0.9);
 }
 
@@ -586,7 +589,7 @@ section#sobre {
 
     .hero-container {
         /* [SUA REQUISIÇÃO] 400px de padding NO TOPO */
-        padding: 400px 1.5rem 4rem 1.5rem; 
+        padding: 330px 1rem 0rem 1rem; 
         max-width: 100%;
         margin: 0;
         position: relative;
@@ -619,8 +622,9 @@ section#sobre {
     }
     
     .hero-description {
-        font-size: 1.1rem;
-        
+        font-size: 1rem;
+          line-height: 1.3; /* 1.6 vezes o tamanho da fonte */
+margin-bottom: 0.1rem;
     }
 
     .cta-button {
@@ -798,5 +802,45 @@ section#sobre {
     /* Centraliza a frase de apoio */
     #para-quem .highlight-box {
         text-align: center;
+    }
+}
+
+/* --- Destaque do Bônus (Kit Físico) --- */
+.bonus-highlight-box {
+    background-color: #DA8825; /* Laranja da paleta */
+    border-radius: 8px; /* Cantos arredondados */
+    padding: 1.2rem 1.5rem; /* Espaçamento interno */
+    margin-top: 0.5rem; /* Leve espaço acima */
+    
+    /* Remove o ícone de check (::before) deste item específico */
+    list-style: none; 
+}
+
+.bonus-highlight-box::before {
+    display: none; /* Esconde o '✔' */
+}
+
+/* Força os textos dentro do box a ficarem brancos */
+.bonus-highlight-box .bonus-item-content,
+.bonus-highlight-box .bonus-item-content strong,
+.bonus-highlight-box .bonus-item-content span {
+    color: #FFFFFF !important; /* Texto branco */
+}
+
+/* Ajusta a margem do <strong> (que não é mais laranja) */
+.bonus-highlight-box .bonus-item-content strong {
+     margin-right: 0.5em; 
+}
+
+/* Ajustes mobile para o box (herdado da regra anterior) */
+@media (max-width: 480px) {
+    .bonus-highlight-box .bonus-item-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .bonus-highlight-box .bonus-item-content strong {
+        margin-right: 0;
+        margin-bottom: 2px;
     }
 }
