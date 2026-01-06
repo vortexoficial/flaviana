@@ -844,3 +844,56 @@ margin-bottom: 0.1rem;
         margin-bottom: 2px;
     }
 }
+
+/* ======================================================= */
+/* === CORREÇÃO "LAYOUT TRAVADO" PARA NOTEBOOKS/LAPTOPS === */
+/* ======================================================= */
+
+/* Aplica em telas de Laptop e Tablets em modo paisagem (de 900px até 1500px) */
+@media (min-width: 900px) and (max-width: 1550px) {
+
+    .hero {
+        /* Mantém a imagem ancorada na direita, mas ajusta o zoom dela */
+        background-position: right center;
+        background-size: cover;
+        
+        /* Ajustamos o padding para ser proporcional (em %), não fixo */
+        padding-left: 5%; 
+        padding-right: 0; /* Remove padding da direita para dar espaço à imagem */
+    }
+
+    .hero-container {
+        /* O SEGREDO ESTÁ AQUI: */
+        /* Forçamos o conteúdo a ocupar NO MÁXIMO 50% da largura da tela.
+           Assim, ele nunca vai invadir o lado direito onde está o rosto. */
+        width: 50%; 
+        max-width: none; /* Remove limite de pixels */
+    }
+
+    .hero-text-content {
+        /* Garante que o texto fique alinhado à esquerda dentro desse bloco de 50% */
+        text-align: left;
+    }
+
+    .hero-headline {
+        /* Reduzimos a fonte para que o título caiba no espaço menor sem quebrar muitas linhas */
+        font-size: 2.4rem; 
+    }
+    
+    .hero-description {
+        /* Texto de apoio levemente menor para manter a harmonia */
+        font-size: 1rem;
+        max-width: 90%; /* Garante que o parágrafo não fique muito largo */
+    }
+
+    /* Ajuste do botão para não ficar gigante em telas médias */
+    .cta-button {
+        padding: 14px 24px;
+        font-size: 1rem;
+    }
+    
+    /* Se a seta estiver atrapalhando, podemos ajustá-la ou escondê-la nessa resolução */
+    .scroll-arrow {
+        bottom: 2rem;
+    }
+}
